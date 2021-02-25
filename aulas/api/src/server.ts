@@ -1,30 +1,13 @@
+import "reflect-metadata";
 import express from 'express';
+import { router } from "./routes";
+import "./database"; // Não precisa especificar o arquivo index.ts pq por padrão quando se tem um arquivo index ele é será importado
 
 const app = express();
 
-/**
- * GET => Buscar
- * POST => Salvar
- * PUT => Editar
- * DELETE => Deletar
- * PATCH => Alteração Específica
-*/
+app.use(express.json());    // Informa o app que o formato dos dados recebidos no request será JSON
+app.use(router);            // Informa o app qual o arquivo de rotas utilizar
 
-/**
- * Utilizando os métodos
- * 1º param => rota (recurso API)
- * 2º param => request, response
-*/
-
-app.get("/", (request, response) => {
-    //return response.send("Hello World - NLW04");
-    return response.json({ message: "Hello World - NLW04" });
-});
-
-
-app.post("/", (request, response) => {
-    return response.json({ message: "Os dados foram salvos com sucesso!" });
-});
-
-// http://localhost:3333/
+// Rodando na porta 3333 (http://localhost:3333/)
+// Comando para iniciar o servidor: yarn dev
 app.listen(3333, () => console.log("Server is running!"));
