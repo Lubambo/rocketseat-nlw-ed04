@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
-import { User } from '../models/User';
+import { getCustomRepository } from "typeorm";
+import { UsersRepository } from "../repositories/UsersRepository";
 
 
 class UserController {
@@ -10,7 +10,7 @@ class UserController {
         const { name, email } = request.body;
 
         // Respositório (responsável pela comunicação do controller com o banco de dados)
-        const usersRepository = getRepository(User);
+        const usersRepository = getCustomRepository(UsersRepository);
 
         // Verifica se já existe algum usuário cadastrado que possua o mesmo email enviado no body do request
         // findOne({ email }) é o mesmo que SELECT * FROM Users WHERE email = "email"
@@ -31,7 +31,7 @@ class UserController {
         // Salva o usuário no banco
         await usersRepository.save(user);
 
-        return response.json(user);
+        return response.status(201).json(user);
     }
 
 }
